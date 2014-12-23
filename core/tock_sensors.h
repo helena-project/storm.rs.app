@@ -17,7 +17,7 @@ struct SensorObj
 	//pretty void pointer the application set the address to this pointer
 	//sensor object writes to it
 	void *ptr ;
-	pthread_t id;
+	pthread_t id; //sensory thread
     void (*get)(const void* self, void *); //blocking
     void (*getPeriodic)(const void* self, void *, uint32_t t); //non blocking
 

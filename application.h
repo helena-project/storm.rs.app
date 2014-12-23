@@ -13,7 +13,6 @@
 #include "sys/resource_manager.h"
 #include "core/tock_application.h"
 
-APP_ERROR init(RESOURCE_MANAGER rm);
 //sub-classing the application
 
 typedef struct Water_Application* WaterApplication;
@@ -21,11 +20,15 @@ typedef struct Water_Application* WaterApplication;
 struct Water_Application
 {
     Application base;
-
-    char* (*init)(const void* self, RESOURCE_MANAGER rm);
-    void (*onWakeUp)(const void* self, char* value);
-    int (*onEnteringLP)(const void* self);
+    ResourceManager * rsm;
+    Resource * temperature;
+    Resource * flow;
+    APP_ERROR (*init)(const void* self, ResourceManager * rm);
+    APP_ERROR (*onWakeUp)(const void* self);
+    APP_ERROR (*onEnteringLP)(const void* self);
 };
+
+
 
 WaterApplication NewWaterApplication();
 

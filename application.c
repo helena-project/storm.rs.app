@@ -5,12 +5,15 @@
  *      Author: lauril
  */
 #include <stdio.h>
-
+#include <stdlib.h>
 #include "application.h"
 
 
-APP_ERROR init(RESOURCE_MANAGER rs){
-	printf("Init Successful %d\n", *rs);
+APP_ERROR init(const void * self, ResourceManager*  rs){
+	((WaterApplication)self)->rsm = rs;
+	((WaterApplication)self)->temperature = ((ResourceManager)((WaterApplication)self)->rsm)->
+											getResource(((ResourceManager)((WaterApplication)self)->rsm),RESOURCE_SENSOR_TEMPERATURE);
+	printf("Init Successful\n");
 	return INIT_SUCCESSFULL;
 }
 
@@ -27,10 +30,10 @@ APP_ERROR onEnteringLP(const void* self){
 
 WaterApplication NewWaterApplication()
 {
-	WaterApplication self = (WaterApplication)malloc(sizeof(struct Water_Application));
+	WaterApplication self = (WaterApplication) malloc(sizeof(struct Water_Application));
 
-    self->base = ApplicationObj();
-    self->init = init;
+    self->base = NewApplication();
+    self->init = &init;
     self->onWakeUp = &onWakeUp;
     self->onEnteringLP = &onEnteringLP;
 
