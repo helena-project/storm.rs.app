@@ -8,11 +8,15 @@
 #include <stdlib.h>
 #include "application.h"
 
+#define mGetResource(type, self, resource, resource_kind)\
+	((type)self)->resource = ((ResourceManager)((type)self)->rsm)->getResource(((ResourceManager)((type)self)->rsm)->resource_kind)
 
-APP_ERROR init(const void * self, ResourceManager*  rs){
+#define foo(x,y,z,i) int a= x+y+z+i
+
+APP_ERROR init(OBJECT self, ResourceManager*  rs){
 	((WaterApplication)self)->rsm = rs;
-	((WaterApplication)self)->temperature = ((ResourceManager)((WaterApplication)self)->rsm)->
-											getResource(((ResourceManager)((WaterApplication)self)->rsm),RESOURCE_SENSOR_TEMPERATURE);
+	((WaterApplication)self)->temperature = ((ResourceManager*)rs)->getResource(rs, RESOURCE_SENSOR_TEMPERATURE);
+
 	printf("Init Successful\n");
 	return INIT_SUCCESSFULL;
 }

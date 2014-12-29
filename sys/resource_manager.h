@@ -14,7 +14,7 @@
 
 
 #define RESOURCE_KIND				int
-#define RESOURCE_SENSOR_TEMPERATURE	100
+#define RESOURCE_SENSOR_TEMPERATURE 100
 #define RESOURCE_SENSOR_FLOW		101
 #define RESOURCE_STORAGE_FLASH		200
 #define RESOURCE_SECURITY_ENCRYPT	300
@@ -61,8 +61,12 @@ typedef struct ResourceManagerObj* ResourceManager;
 //resrouce manger object
 struct ResourceManagerObj
 {
-	Resource * (*getResource)(OBJECT self,RESOURCE_KIND kind);
+	Resource * (*getResource)(OBJECT * self, RESOURCE_KIND kind);
+
 
 };
+
+
+Resource * (*getResource)(OBJECT * self, RESOURCE_KIND kind);
 
 #endif /* SYS_RESOURCE_MANAGER_H_ */
