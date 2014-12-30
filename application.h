@@ -20,14 +20,13 @@ typedef struct Water_Application* WaterApplication;
 struct Water_Application
 {
     Application base;
-    ResourceManager * rsm;
-    Resource * temperature;
-    Resource * flow;
-    APP_ERROR (*init)(const void* self, ResourceManager * rm);
-    APP_ERROR (*onWakeUp)(const void* self);
-    APP_ERROR (*onEnteringLP)(const void* self);
+    ResourceManager  rsm;
+    Resource temperature;
+    Resource flow;
+    APP_ERROR (*init)(OBJECT self, ResourceManager rm);
+    APP_ERROR (*onWakeUp)(OBJECT self);
+    APP_ERROR (*onEnteringLP)(OBJECT self);
 };
-
 
 
 WaterApplication NewWaterApplication();

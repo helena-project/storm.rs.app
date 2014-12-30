@@ -16,14 +16,14 @@ typedef struct ApplicationObj* Application;
 //application object
 struct ApplicationObj
 {
-    char* (*init)(OBJECT self, ResourceManager * rm);
-    void (*onWakeUp)(OBJECT self, char* value);
-    int (*onEnteringLP)(OBJECT self);
+	APP_ERROR (*init)(OBJECT self, ResourceManager rm);
+    APP_ERROR (*onWakeUp)(OBJECT self, char* value);
+    APP_ERROR (*onEnteringLP)(OBJECT self);
 };
 
 /// main application methods called from the core
 
-APP_ERROR init(OBJECT self, ResourceManager * rm);
+APP_ERROR init(OBJECT self, ResourceManager rm);
 APP_ERROR onWakeUp(OBJECT self);
 APP_ERROR onEnteringLP(OBJECT self);
 

@@ -9,6 +9,7 @@
 #define SYS_RESOURCE_MANAGER_H_
 
 #define OBJECT const void*
+#define WRITEBACK void *
 #define RESOURCE_MANAGER int*
 #define RESOURCE_TYPE int
 
@@ -41,7 +42,9 @@
 #define RESOURCE_TYPE_FLOAT_T		6
 
 #define RESOURCE_ERROR_TYPE_ERROR	1000 // var is of wrong type
-
+#define RESOURCE_SCHEDULING_ERROR_T	int
+#define RESOURCE_SCHEDULING_SUCCESS	1100 //
+#define RESOURCE_SCHEDULING_ERROR	1101 //
 
 
 typedef struct ResourceObj* Resource;
@@ -51,22 +54,27 @@ struct ResourceObj
 {
 	RESOURCE_TYPE resourcetype;
 	void * resource;
-    void * (*setVar)(OBJECT self, RESOURCE_TYPE type, void * resource);
+    void * (*setVar)(OBJECT self, RESOURCE_TYPE type, WRITEBACK resource);
     RESOURCE_TYPE (*getType)(OBJECT self);
 
 };
 
 typedef struct ResourceManagerObj* ResourceManager;
 
-//resrouce manger object
+//Resource manger object
 struct ResourceManagerObj
 {
-	Resource * (*getResource)(OBJECT * self, RESOURCE_KIND kind);
-
-
+	Resource  (*getResource)(OBJECT self, RESOURCE_KIND kind);
+	RESOURCE_SCHEDULING_ERROR_T (*schedulePeriodic)(OBJECT self, Resource rsc);
+	RESOURCE_SCHEDULING_ERROR_T (*scheduleOneShoot)(OBJECT self, Resource rsc);
 };
 
+Resource  (*getResource)(OBJECT self, RESOURCE_KIND kind);
+RESOURCE_SCHEDULING_ERROR_T (*schedulePeriodic)(OBJECT self, Resource rsc);
+RESOURCE_SCHEDULING_ERROR_T (*scheduleOneShoot)(OBJECT self, Resource rsc);
 
-Resource * (*getResource)(OBJECT * self, RESOURCE_KIND kind);
+ResourceManager NewResourceManager();
+
+
 
 #endif /* SYS_RESOURCE_MANAGER_H_ */
